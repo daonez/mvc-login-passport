@@ -3,6 +3,9 @@ const express = require("express")
 const app = express()
 const loginRouter = require("./routes/login")
 
+const connect = require("./models")
+connect()
+
 app.set("view engine", "ejs")
 //Routes
 app.use("/", loginRouter)
