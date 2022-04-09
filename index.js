@@ -6,15 +6,13 @@ const passport = require("passport")
 const { loginCheck } = require("./auth/passport")
 const connect = require("./models")
 const session = require("express-session")
+
 connect()
 loginCheck(passport)
+const dotenv = require("dotenv")
+dotenv.config()
 
 app.set("view engine", "ejs")
-//Routes
-app.use("/", loginRouter)
-app.get("/", (req, res) => {
-  res.send("hello")
-})
 
 //BodyParsing
 app.use(express.urlencoded({ extended: false }))
@@ -28,6 +26,12 @@ app.use(
 
 app.use(passport.initialize())
 app.use(passport.session())
+//Routes
+app.use("/", require("./routes/login"))
+
+app.get("/", (req, res) => {
+  res.send("hello")
+})
 
 const PORT = 4000
 app.listen(PORT, console.log("Server has started at port " + PORT))

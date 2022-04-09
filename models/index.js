@@ -1,17 +1,21 @@
 const mongoose = require("mongoose")
+require("dotenv").config()
 
 const connect = () => {
-  mongoose.connect(
-    "mongodb://localhost:27017/mvc-node",
-    { ignoreUndefined: true },
-    (error) => {
-      if (error) {
-        console.log("mongodb error", error)
-      } else {
-        console.log("connected")
-      }
+  try {
+    mongoose.connect(
+      process.env.MONGO_DB,
+      { ignoreUndefined: true },
+      { useUnifiedTopology: true, useNewUrlParser: true }
+    )
+    console.log("DB Connected")
+  } catch (error) {
+    if (error) {
+      console.log("mongodb error", error)
+    } else {
+      console.log("connected")
     }
-  )
+  }
 }
 
 module.exports = connect
